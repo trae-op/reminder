@@ -5,7 +5,7 @@ export const useIpc = () => {
   const { setItems } = useControlContextActions();
 
   useEffect(() => {
-    window.electron.send.resources();
+    window.electron.send.reminders();
   }, []);
 
   useEffect(() => {

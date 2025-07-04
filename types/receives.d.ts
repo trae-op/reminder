@@ -15,15 +15,6 @@ type TAuth = {
   isAuthenticated: boolean;
 };
 
-type TEventPayloadReceive = {
-  updateApp: TUpdateData;
-  openUpdateApp: TOpenUpdateApp;
-  auth: TAuth;
-  user: {
-    user: TUser;
-  };
-};
-
 type TUpdateData = {
   downloadedPercent?: string;
   message?: string;
@@ -31,6 +22,24 @@ type TUpdateData = {
   platform?: string;
   updateFile?: string;
   status: TStatusesUpdate;
+};
+
+type TReminders = {
+  items: TReminder[];
+};
+type TGetReminder = {
+  item: TReminder | undefined;
+};
+
+type TEventPayloadReceive = {
+  updateApp: TUpdateData;
+  openUpdateApp: TOpenUpdateApp;
+  auth: TAuth;
+  user: {
+    user: TUser;
+  };
+  reminders: TReminders;
+  getReminder: TGetReminder;
 };
 
 type TReceive = {
@@ -45,5 +54,11 @@ type TReceive = {
   ) => TUnsubscribeFunction;
   subscribeUser: (
     callback: (payload: TEventPayloadReceive["user"]) => void
+  ) => TUnsubscribeFunction;
+  subscribeReminders: (
+    callback: (payload: TEventPayloadReceive["reminders"]) => void
+  ) => TUnsubscribeFunction;
+  subscribeGetReminder: (
+    callback: (payload: TEventPayloadReceive["getReminder"]) => void
   ) => TUnsubscribeFunction;
 };

@@ -13,7 +13,7 @@ function arePropsEqual(oldProps: TPropsItem, newProps: TPropsItem): boolean {
 }
 
 export const Item = memo(
-  ({ name, id, handleUpdate, handleDelete }: TPropsItem) => {
+  ({ name, id, handleUpdate, handleDelete, isDaily, datetime }: TPropsItem) => {
     return (
       <Card sx={{ width: "100%" }}>
         <CardContent>

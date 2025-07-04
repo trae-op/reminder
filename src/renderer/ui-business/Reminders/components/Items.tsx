@@ -13,13 +13,13 @@ export const Items = memo(() => {
 
   return list.map((item) => {
     const handleUpdate = () => {
-      window.electron.send.windowOpenUpdateResource({
+      window.electron.send.windowOpenUpdate({
         id: item.id + "",
       });
     };
 
     const handleDelete = () => {
-      window.electron.send.windowOpenDeleteResource({
+      window.electron.send.windowOpenDelete({
         id: item.id + "",
       });
     };
@@ -29,6 +29,8 @@ export const Items = memo(() => {
         key={item.id + ""}
         id={item.id}
         name={item.name}
+        isDaily={item.isDaily}
+        datetime={item.datetime}
         handleUpdate={handleUpdate}
         handleDelete={handleDelete}
       />
