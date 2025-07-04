@@ -41,6 +41,18 @@ electron.contextBridge.exposeInMainWorld("electron", {
     openLatestVersion: (payload) => {
       ipcSend("openLatestVersion", payload);
     },
+    windowOpenDelete: (payload) => {
+      ipcSend("openDelete", payload);
+    },
+    windowOpenUpdate: (payload) => {
+      ipcSend("openUpdate", payload);
+    },
+    reminders: () => {
+      ipcSend("reminders");
+    },
+    getReminder: (payload) => {
+      ipcSend("getReminder", payload);
+    },
   },
   invoke: {
     getVersion: () => ipcInvoke("getVersion"),

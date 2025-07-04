@@ -13,7 +13,8 @@
       "../../types/windows",
       "../../types/files",
       "../../types/providers",
-      "../../types/user"
+      "../../types/user",
+      "../../types/reminders"
     ]
   }
 }

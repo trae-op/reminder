@@ -8,7 +8,8 @@
       "./types/files",
       "./types/providers",
       "./types/user",
-      "./types/receives"
+      "./types/receives",
+      "./types/reminders"
     ],
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",

@@ -6,6 +6,10 @@ type TWindowAuth = {
   provider: TProviders;
 };
 
+type TGetReminder = {
+  id: string;
+};
+
 type TEventPayloadSend = {
   restart: undefined;
   windowClosePreload: undefined;
@@ -14,6 +18,10 @@ type TEventPayloadSend = {
   checkAuth: undefined;
   windowAuth: TWindowAuth;
   openLatestVersion: TOpenLatestVersion;
+  reminders: undefined;
+  getReminder: TGetReminder;
+  openUpdate: TGetReminder;
+  openDelete: TGetReminder;
 };
 
 type TSend = {
@@ -24,4 +32,8 @@ type TSend = {
   logout: () => void;
   windowAuth: (payload: TEventPayloadSend["windowAuth"]) => void;
   openLatestVersion: (payload: TEventPayloadSend["openLatestVersion"]) => void;
+  reminders: () => void;
+  getReminder: (payload: TEventPayloadSend["getReminder"]) => void;
+  windowOpenUpdate: (payload: TEventPayloadSend["openUpdate"]) => void;
+  windowOpenDelete: (payload: TEventPayloadSend["openDelete"]) => void;
 };
