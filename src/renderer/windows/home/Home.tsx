@@ -1,9 +1,10 @@
 import { lazy, Suspense } from "react";
-import Typography from "@mui/material/Typography";
 import { LoadingSpinner } from "@components/LoadingSpinner";
 import { Provider as ProviderUser } from "@ui-business/User";
+import Box from "@mui/material/Box";
 
 const LazyTopPanel = lazy(() => import("./TopPanel"));
+const LazyReminders = lazy(() => import("./Reminders"));
 
 const Home = () => {
   return (
@@ -11,9 +12,11 @@ const Home = () => {
       <Suspense fallback={<LoadingSpinner />}>
         <LazyTopPanel />
       </Suspense>
-      <Typography component="h1" variant="h4">
-        Electron.js
-      </Typography>
+      <Box sx={{ mt: 6, width: "100%" }}>
+        <Suspense fallback={<LoadingSpinner />}>
+          <LazyReminders />
+        </Suspense>
+      </Box>
     </ProviderUser>
   );
 };

@@ -4,9 +4,9 @@ import { Context, ContextActions } from "../context";
 import type { TPropsProvider } from "./types";
 
 export const Provider = ({ children }: TPropsProvider) => {
-  const [list, setList] = useState<TResource[] | undefined>(undefined);
+  const [list, setList] = useState<TReminder[] | undefined>(undefined);
 
-  const setItems = useCallback((items: TResource[]) => {
+  const setItems = useCallback((items: TReminder[]) => {
     setList((prevItems) => (isEqual(prevItems, items) ? prevItems : items));
   }, []);
 

@@ -9,7 +9,7 @@ export const useIpc = () => {
   }, []);
 
   useEffect(() => {
-    window.electron.receive.subscribeResources(({ items }) => {
+    window.electron.receive.subscribeReminders(({ items }) => {
       setItems(items);
     });
   }, []);
