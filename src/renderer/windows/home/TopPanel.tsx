@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { lazy, memo, Suspense } from "react";
 import Stack from "@mui/material/Stack";
 import ListItemButton, {
   ListItemButtonProps,
@@ -13,6 +13,9 @@ import {
 } from "@ui-business/Updater";
 import { TopPanel } from "@layouts/TopPanel";
 import { Container as ContainerAppVersion } from "@ui-composites/AppVersion";
+import CircularProgress from "@mui/material/CircularProgress";
+
+const LazyAddReminderButton = lazy(() => import("./AddReminderButton"));
 
 const ContainerTopPanel = memo(() => {
   const value = useIpcUpdate();
@@ -39,6 +42,10 @@ const ContainerTopPanel = memo(() => {
         alignItems="center"
         sx={{ width: "100%" }}
       >
+        <Suspense fallback={<CircularProgress size={20} />}>
+          <LazyAddReminderButton />
+        </Suspense>
+
         <ContextUserPopover.Provider
           value={{
             isNewVersionApp: value.status === "update-downloaded",

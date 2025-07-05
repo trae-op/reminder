@@ -7,6 +7,9 @@ export const windows: TWindows = {
   updateApp: "window:update-app",
   preloadApp: "window:preload-app",
   auth: "window:auth",
+  addReminder: "window/reminder/add",
+  updateReminder: "window/reminder/update",
+  deleteReminder: "window/reminder/delete",
 };
 
 export const folders = {

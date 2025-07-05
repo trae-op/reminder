@@ -52,6 +52,9 @@ electron.contextBridge.exposeInMainWorld("electron", {
     windowOpenDelete: (payload) => {
       ipcSend("openDelete", payload);
     },
+    windowOpenAdd: () => {
+      ipcSend("openAdd");
+    },
     windowOpenUpdate: (payload) => {
       ipcSend("openUpdate", payload);
     },

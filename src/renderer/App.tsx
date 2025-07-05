@@ -5,9 +5,11 @@ import { PublicRoute } from "@ui-composites/PublicRoute";
 import { PrivateRoute } from "@ui-composites/PrivateRoute";
 import { LoadingSpinner } from "@components/LoadingSpinner";
 import { ProviderAuth } from "@ui-business/Auth";
+import { FormRemindersLayout } from "@layouts/FormReminders";
 
 const LazyHomeWindow = lazy(() => import("./windows/home/Home"));
 const LazyUpdaterWindow = lazy(() => import("./windows/updater/Updater"));
+const LazyAddReminderWindow = lazy(() => import("./windows/AddReminder"));
 const LazyLogInWindow = lazy(() => import("./windows/logIn/LogIn"));
 
 export const App = () => {
@@ -22,6 +24,12 @@ export const App = () => {
               </Route>
               <Route element={<PrivateRoute />}>
                 <Route path="/window:main" element={<LazyHomeWindow />} />
+              </Route>
+              <Route element={<FormRemindersLayout />}>
+                <Route
+                  path="/window/reminder/add"
+                  element={<LazyAddReminderWindow />}
+                />
               </Route>
               <Route
                 path="/window:update-app"

@@ -29,6 +29,8 @@ export function registerIpc(): void {
   });
 
   ipcMainOn("openAdd", () => {
-    openReminderWindow("window/reminder/add");
+    const win = openReminderWindow("window/reminder/add");
+
+    win.webContents.openDevTools();
   });
 }

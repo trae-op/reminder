@@ -11,7 +11,7 @@ export function openReminderWindow(
     options: {
       alwaysOnTop: true,
       width: 400,
-      height: 500,
+      height: 400,
     },
   });
 }
