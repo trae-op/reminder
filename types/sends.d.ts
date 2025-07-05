@@ -6,7 +6,7 @@ type TWindowAuth = {
   provider: TProviders;
 };
 
-type TGetReminder = {
+type TCallbackGetReminder = {
   id: string;
 };
 
@@ -19,9 +19,10 @@ type TEventPayloadSend = {
   windowAuth: TWindowAuth;
   openLatestVersion: TOpenLatestVersion;
   reminders: undefined;
-  getReminder: TGetReminder;
-  openUpdate: TGetReminder;
-  openDelete: TGetReminder;
+  getReminder: TCallbackGetReminder;
+  openUpdate: TCallbackGetReminder;
+  openDelete: TCallbackGetReminder;
+  openAdd: undefined;
 };
 
 type TSend = {
@@ -33,6 +34,7 @@ type TSend = {
   windowAuth: (payload: TEventPayloadSend["windowAuth"]) => void;
   openLatestVersion: (payload: TEventPayloadSend["openLatestVersion"]) => void;
   reminders: () => void;
+  windowOpenAdd: () => void;
   getReminder: (payload: TEventPayloadSend["getReminder"]) => void;
   windowOpenUpdate: (payload: TEventPayloadSend["openUpdate"]) => void;
   windowOpenDelete: (payload: TEventPayloadSend["openDelete"]) => void;

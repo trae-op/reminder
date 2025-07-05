@@ -14,6 +14,7 @@ import { checkForUpdates } from "./updater/services/checkForUpdates.js";
 import { registerIpc as registerIpcAppVersion } from "./app-version/ipc.js";
 import { registerIpc as registerIpcUpdater } from "./updater/ipc.js";
 import { registerIpc as registerIpcPreload } from "./app-preload/ipc.js";
+import { registerIpc as registerIpcReminders } from "./reminders/ipc.js";
 import { registerIpc as registerIpcAuth } from "./auth/ipc.js";
 import { registerIpc as registerIpcUser } from "./user/ipc.js";
 import { crash } from "./crash/service.js";
@@ -82,6 +83,7 @@ app.on("ready", async () => {
   registerIpcPreload();
   registerIpcAppVersion();
   registerIpcUpdater();
+  registerIpcReminders();
 
   handleCloseEvents(mainWindow);
 });

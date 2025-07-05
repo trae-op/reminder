@@ -73,6 +73,10 @@ export const restApi = {
       base: "/user",
       byId: (id: string) => `/${id}`,
     },
+    reminders: {
+      base: "/reminders",
+      byId: (id: string) => `/${id}`,
+    },
     githubReleases: `https://api.github.com/repos/${publishOptions.owner}/${publishOptions.repo}/releases`,
   },
 };

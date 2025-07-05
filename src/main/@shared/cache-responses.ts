@@ -20,3 +20,21 @@ export function cacheUser(userId: string | undefined): TUser | undefined {
 
   return undefined;
 }
+
+export function cacheReminders(): TReminder[] | undefined {
+  let reminders: TReminder[] | undefined = undefined;
+  const cacheResponse = getElectronStorage("response");
+
+  if (cacheResponse !== undefined) {
+    reminders =
+      cacheResponse[
+        `${restApi.urls.base}${restApi.urls.baseApi}${restApi.urls.reminders.base}`
+      ];
+  }
+
+  if (reminders !== undefined) {
+    return reminders;
+  }
+
+  return undefined;
+}
