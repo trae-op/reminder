@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
+import Box from "@mui/material/Box";
 import { LoadingSpinner } from "@components/LoadingSpinner";
 import { Provider as ProviderUser } from "@ui-business/User";
-import Box from "@mui/material/Box";
 
 const LazyTopPanel = lazy(() => import("./TopPanel"));
 const LazyReminders = lazy(() => import("./Reminders"));

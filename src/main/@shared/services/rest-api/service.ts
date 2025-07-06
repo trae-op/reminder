@@ -10,7 +10,7 @@ import {
   TCacheResponse,
 } from "../../store.js";
 import { restApi } from "../../../config.js";
-import type { ApiResponse, RequestOptions } from "./types.js";
+import type { ApiResponse, DataError, RequestOptions } from "./types.js";
 import { logout } from "../logout.js";
 
 function getAuthorization(): AxiosRequestConfig["headers"] | undefined {
@@ -55,7 +55,9 @@ function handleResponse<T>(response: AxiosResponse<T>): ApiResponse<T> {
   };
 }
 
-function handleError(error: AxiosError): ApiResponse<any> {
+function handleError<D extends DataError>(
+  error: AxiosError<D>
+): ApiResponse<any> {
   if (error.response) {
     if (error.response.status === 401) {
       logout();
@@ -63,13 +65,10 @@ function handleError(error: AxiosError): ApiResponse<any> {
     return {
       status: error.response.status,
       error: {
-        message:
-          error.message ||
-          `Request failed with status ${error.response.status}`,
+        message: error.response.data.message.join(","),
         code: error.code,
         details: error.response.data,
       },
-      data: undefined,
     };
   } else if (error.request) {
     return {
@@ -102,7 +101,7 @@ export async function get<T>(
 
     return handleResponse<T>(response);
   } catch (error: any) {
-    return handleError(error as AxiosError);
+    return handleError(error as AxiosError<DataError>);
   }
 }
 
@@ -194,7 +193,7 @@ export async function post<T>(
     );
     return handleResponse<T>(response);
   } catch (error: any) {
-    return handleError(error as AxiosError);
+    return handleError(error as AxiosError<DataError>);
   }
 }
 
@@ -211,7 +210,7 @@ export async function put<T>(
     );
     return handleResponse<T>(response);
   } catch (error: any) {
-    return handleError(error as AxiosError);
+    return handleError(error as AxiosError<DataError>);
   }
 }
 
@@ -226,6 +225,6 @@ export async function del<T>(
     );
     return handleResponse<T>(response);
   } catch (error: any) {
-    return handleError(error as AxiosError);
+    return handleError(error as AxiosError<DataError>);
   }
 }

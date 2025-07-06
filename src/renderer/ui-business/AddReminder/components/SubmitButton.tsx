@@ -1,7 +1,8 @@
+import { memo } from "react";
 import { useFormStatus } from "react-dom";
 import Button from "@mui/material/Button";
 
-export const SubmitButton = () => {
+export const SubmitButton = memo(() => {
   const { pending } = useFormStatus();
 
   return (
@@ -16,4 +17,4 @@ export const SubmitButton = () => {
       {pending ? "Sending..." : "Apply"}
     </Button>
   );
-};
+});

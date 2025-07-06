@@ -11,6 +11,9 @@ const LazyHomeWindow = lazy(() => import("./windows/home/Home"));
 const LazyUpdaterWindow = lazy(() => import("./windows/updater/Updater"));
 const LazyAddReminderWindow = lazy(() => import("./windows/AddReminder"));
 const LazyLogInWindow = lazy(() => import("./windows/logIn/LogIn"));
+const LazyConfirmDeleteReminderWindow = lazy(
+  () => import("./windows/confirmDeleteReminder/Confirm")
+);
 
 export const App = () => {
   return (
@@ -31,6 +34,10 @@ export const App = () => {
                   element={<LazyAddReminderWindow />}
                 />
               </Route>
+              <Route
+                path="/window/reminder/delete/:id"
+                element={<LazyConfirmDeleteReminderWindow />}
+              />
               <Route
                 path="/window:update-app"
                 element={<LazyUpdaterWindow />}

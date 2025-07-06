@@ -4,12 +4,16 @@ import { logger } from "../logger.js";
 type TParams = {
   title: string;
   body: string;
+  isDialog?: boolean;
 };
 
-export function showErrorMessages({ title, body }: TParams) {
+export function showErrorMessages({ title, body, isDialog = true }: TParams) {
   logger.error(title, body);
-  dialog.showMessageBox({
-    title,
-    message: body,
-  });
+
+  if (isDialog) {
+    dialog.showMessageBox({
+      title,
+      message: body,
+    });
+  }
 }

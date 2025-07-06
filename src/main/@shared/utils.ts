@@ -14,14 +14,16 @@ export function isPlatform(platform: NodeJS.Platform): boolean {
   return process.platform === platform;
 }
 
-export function ipcMainHandle<Key extends keyof TEventPayloadInvoke>(
+export function ipcMainHandle<Key extends keyof TEventSendInvoke>(
   key: Key,
-  handle: () => TEventPayloadInvoke[Key]
+  handle: (
+    payload?: TEventSendInvoke[Key]
+  ) => TEventPayloadInvoke[Key] | Promise<TEventPayloadInvoke[Key]>
 ) {
-  ipcMain.handle(key, (event) => {
+  ipcMain.handle(key, async (event, payload?: TEventSendInvoke[Key]) => {
     validateEventFrame(event.senderFrame);
 
-    return handle();
+    return await handle(payload);
   });
 }
 
@@ -46,7 +48,12 @@ function containsAnyIdentifier(
   fullUrl: string,
   identifiers: string[]
 ): boolean {
-  return identifiers.some((identifier) => fullUrl.includes(identifier));
+  if (identifiers.some((identifier) => fullUrl.includes(identifier))) {
+    return true;
+  }
+
+  const numberPattern = /\/\d+(\/|$)/;
+  return numberPattern.test(fullUrl);
 }
 
 export function validateEventFrame(frame: WebFrameMain | null) {

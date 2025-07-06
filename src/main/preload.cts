@@ -64,9 +64,14 @@ electron.contextBridge.exposeInMainWorld("electron", {
     getReminder: (payload) => {
       ipcSend("getReminder", payload);
     },
+    cancelDeleteReminder: () => {
+      ipcSend("cancelDeleteReminder");
+    },
   },
   invoke: {
     getVersion: () => ipcInvoke("getVersion"),
+    addReminder: (payload) => ipcInvoke("addReminder", payload),
+    deleteReminder: (payload) => ipcInvoke("deleteReminder", payload),
   },
 } satisfies Window["electron"]);
 

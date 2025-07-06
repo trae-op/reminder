@@ -16,3 +16,9 @@ export interface RequestOptions extends AxiosRequestConfig {
   params?: Record<string, any>;
   isCache?: boolean;
 }
+
+export interface DataError {
+  message: string[];
+  error: string;
+  statusCode: number;
+}

@@ -1,17 +1,17 @@
 import { memo } from "react";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import {
-  Provider as ProviderReminders,
+  Provider,
   Items,
   useControlContext as useControlContextResources,
 } from "@ui-business/Reminders";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
 const Container = memo(({ children }: { children: React.ReactElement }) => {
   const { list } = useControlContextResources();
 
-  if ((list !== undefined && list.length === 0) || list === undefined) {
+  if (list !== undefined && list.length === 0) {
     return (
       <Stack
         spacing={2}
@@ -58,11 +58,11 @@ const Container = memo(({ children }: { children: React.ReactElement }) => {
 
 const Reminders = memo(() => {
   return (
-    <ProviderReminders>
+    <Provider>
       <Container>
         <Items />
       </Container>
-    </ProviderReminders>
+    </Provider>
   );
 });
 

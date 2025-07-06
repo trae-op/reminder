@@ -24,13 +24,24 @@ export const useControl = (): THookControl => {
   const submitFormAction = useCallback(
     async (_: undefined, formData: FormData): Promise<undefined> => {
       const name = formData.get("name");
-      const datetime = formData.get("datetime");
+      const datetimeRaw = formData.get("datetime");
       const daily = formData.get("daily");
 
-      // await window.electron.invoke.postResource({
-      //   name,
-      //   key,
-      // });
+      let datetime: Date | undefined = undefined;
+      if (typeof datetimeRaw === "string" && datetimeRaw) {
+        const parsed = new Date(datetimeRaw);
+        if (!isNaN(parsed.getTime())) {
+          datetime = parsed;
+        }
+      }
+
+      if (typeof name === "string" && name.length && datetime !== undefined) {
+        await window.electron.invoke.addReminder({
+          name,
+          datetime,
+          isDaily: !!daily,
+        });
+      }
     },
     []
   );
