@@ -62,10 +62,15 @@ function handleError<D extends DataError>(
     if (error.response.status === 401) {
       logout();
     }
+
     return {
       status: error.response.status,
       error: {
-        message: error.response.data.message.join(","),
+        message: `Status: ${error.response.status}, ${
+          Array.isArray(error.response.data.message)
+            ? error.response.data.message.join(",")
+            : error.response.data.message
+        }`,
         code: error.code,
         details: error.response.data,
       },

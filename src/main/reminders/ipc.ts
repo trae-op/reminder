@@ -5,7 +5,7 @@ import {
 } from "../@shared/utils.js";
 import { cacheReminders } from "../@shared/cache-responses.js";
 import { getElectronStorage } from "../@shared/store.js";
-import { list, add, update, deleteById } from "./services/response.js";
+import { list, add, update, byId, deleteById } from "./services/response.js";
 import { openReminderWindow } from "./windows.js";
 import { getWindow } from "../@shared/control-window/receive.js";
 
@@ -34,7 +34,9 @@ export function registerIpc(): void {
   });
 
   ipcMainOn("openUpdate", (_, { id }) => {
-    openReminderWindow("window/reminder/update", id);
+    const win = openReminderWindow("window/reminder/update", id);
+
+    win.webContents.openDevTools();
   });
 
   ipcMainOn("openAdd", () => {
@@ -74,7 +76,7 @@ export function registerIpc(): void {
       ipcWebContentsSend("reminders", mainWindow.webContents, {
         items: reminders || [],
       });
-      addReminderWindow.close();
+      addReminderWindow.hide();
     }
 
     return undefined;
@@ -104,18 +106,27 @@ export function registerIpc(): void {
     }
 
     const mainWindow = getWindow<TWindows["main"]>("window:main");
-    const addReminderWindow = getWindow<TWindows["addReminder"]>(
-      "window/reminder/add"
+    const updateReminderWindow = getWindow(
+      `window/reminder/update/${response.id}`
     );
-    if (mainWindow !== undefined && addReminderWindow !== undefined) {
+    console.log("updateReminderWindow", updateReminderWindow);
+    if (mainWindow !== undefined && updateReminderWindow !== undefined) {
       const reminders = await list();
       ipcWebContentsSend("reminders", mainWindow.webContents, {
         items: reminders || [],
       });
-      addReminderWindow.close();
+      updateReminderWindow.hide();
     }
 
     return undefined;
+  });
+
+  ipcMainOn("getReminder", async (event, { id }) => {
+    const item = await byId(id);
+
+    event.reply("getReminder", {
+      item,
+    });
   });
 
   ipcMainHandle("deleteReminder", async (payload) => {

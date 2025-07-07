@@ -1,9 +1,13 @@
 import { ChangeEvent, useCallback, useMemo } from "react";
-import { useControlContextActions } from "./useControlContext";
+import {
+  useControlContextActions,
+  useControlContext,
+} from "./useControlContext";
 import { THookControl } from "./types";
 
 export const useControl = (): THookControl => {
   const { setName } = useControlContextActions();
+  const { time, date, id } = useControlContext();
 
   const handleAdd = useCallback(() => {
     window.electron.send.windowOpenAdd();
@@ -19,36 +23,24 @@ export const useControl = (): THookControl => {
   const submitFormAction = useCallback(
     async (_: undefined, formData: FormData): Promise<undefined> => {
       const name = formData.get("name");
-      const time = formData.get("time");
-      const date = formData.get("date");
       const daily = formData.get("daily");
 
-      let _date: Date | undefined = undefined;
-      if (typeof date === "string" && date) {
-        const parsed = new Date(date);
-        if (!isNaN(parsed.getTime())) {
-          _date = parsed;
-        }
-      }
-
-      let _time: Date | undefined = undefined;
-      if (typeof time === "string" && time) {
-        const parsed = new Date(time);
-        if (!isNaN(parsed.getTime())) {
-          _time = parsed;
-        }
-      }
-
-      if (typeof name === "string" && name.length && _time !== undefined) {
-        await window.electron.invoke.addReminder({
+      if (
+        typeof name === "string" &&
+        name.length &&
+        time !== undefined &&
+        id !== undefined
+      ) {
+        await window.electron.invoke.updateReminder({
+          id,
           name,
-          time: _time,
-          date: _date,
+          time,
+          date,
           isDaily: !!daily,
         });
       }
     },
-    []
+    [time, date, id]
   );
 
   const value = useMemo(

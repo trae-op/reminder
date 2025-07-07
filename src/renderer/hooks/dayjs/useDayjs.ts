@@ -1,26 +1,23 @@
 import { useEffect, useState } from "react";
 
-type TDayjs = typeof import("dayjs") | null;
-let cachedDayjs: TDayjs = null;
+let cachedDayjs: typeof import("dayjs") | undefined = undefined;
 
 export function useDayjs() {
-  const [dayjs, setDayjs] = useState<TDayjs>(cachedDayjs);
+  const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (!cachedDayjs) {
-      let isMounted = true;
+    if (cachedDayjs === undefined) {
       import("dayjs").then((mod) => {
         const instance = mod.default || mod;
         cachedDayjs = instance;
-        if (isMounted) setDayjs(instance);
+        setLoaded(true);
       });
-      return () => {
-        isMounted = false;
-      };
     }
-
-    setDayjs(cachedDayjs);
   }, []);
 
-  return dayjs;
+  if (isLoaded) {
+    return cachedDayjs;
+  }
+
+  return undefined;
 }

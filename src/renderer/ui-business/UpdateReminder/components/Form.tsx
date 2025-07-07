@@ -8,18 +8,24 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { useControl } from "../hooks/useControl";
-import { useControlContext } from "../hooks/useControlContext";
-import { SubmitButton } from "./SubmitButton";
 import { useDayjs } from "@hooks/dayjs";
+import { useControl } from "../hooks/useControl";
+import {
+  useControlContext,
+  useControlContextActions,
+} from "../hooks/useControlContext";
+import { SubmitButton } from "./SubmitButton";
+import { useIpc } from "../hooks/useIpc";
 
 export const Form = memo(() => {
+  useIpc();
   const dayjs = useDayjs();
+  const { handleDateChange, handleTimeChange } = useControlContextActions();
   const { time, date, daily, name } = useControlContext();
   const { submitFormAction } = useControl();
   const [_, formAction] = useActionState(submitFormAction, undefined);
 
-  if (dayjs === null) {
+  if (dayjs === undefined) {
     return null;
   }
 
@@ -37,13 +43,23 @@ export const Form = memo(() => {
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["DateField"]}>
-            <DateField value={dayjs(date)} name="date" label="Date" />
+            <DateField
+              onChange={handleDateChange}
+              value={dayjs(date)}
+              name="date"
+              label="Date"
+            />
           </DemoContainer>
         </LocalizationProvider>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["TimeField"]}>
-            <TimeField value={dayjs(time)} name="time" label="Time" />
+            <TimeField
+              onChange={handleTimeChange}
+              value={dayjs(time)}
+              name="time"
+              label="Time"
+            />
           </DemoContainer>
         </LocalizationProvider>
 
