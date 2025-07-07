@@ -6,15 +6,14 @@ import { TimeField } from "@mui/x-date-pickers/TimeField";
 import { DateField } from "@mui/x-date-pickers/DateField";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import { useControl } from "../hooks/useControl";
 import { useControlContextActions } from "../hooks/useControlContext";
 import { SubmitButton } from "./SubmitButton";
+import { CheckboxDaily } from "./CheckboxDaily";
 
 export const Form = memo(() => {
   const { handleDateChange, handleTimeChange } = useControlContextActions();
-  const { submitFormAction, isDaily, handleChange } = useControl();
+  const { submitFormAction } = useControl();
   const [_, formAction] = useActionState(submitFormAction, undefined);
 
   return (
@@ -43,12 +42,7 @@ export const Form = memo(() => {
           </DemoContainer>
         </LocalizationProvider>
 
-        <FormControlLabel
-          control={
-            <Checkbox checked={isDaily} onChange={handleChange} name="daily" />
-          }
-          label="Daily"
-        />
+        <CheckboxDaily />
         <SubmitButton />
       </Stack>
     </form>

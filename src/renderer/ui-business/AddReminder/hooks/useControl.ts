@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useMemo } from "react";
 import {
   useControlContextActions,
   useControlContext,
@@ -8,11 +8,6 @@ import { THookControl } from "./types";
 export const useControl = (): THookControl => {
   const { time, date } = useControlContext();
   const { setName } = useControlContextActions();
-
-  const [isDaily, setDaily] = useState(false);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDaily(event.target.checked);
-  };
 
   const handleAdd = useCallback(() => {
     window.electron.send.windowOpenAdd();
@@ -41,16 +36,13 @@ export const useControl = (): THookControl => {
     },
     [time, date]
   );
-
   const value = useMemo(
     () => ({
-      isDaily,
       handleAdd,
-      handleChange,
       submitFormAction,
       handleTextInputChange,
     }),
-    [handleAdd, submitFormAction, handleTextInputChange, handleChange, isDaily]
+    [handleAdd, submitFormAction, handleTextInputChange]
   );
 
   return value;

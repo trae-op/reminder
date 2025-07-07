@@ -1,11 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useControlContextActions } from "./useControlContext";
 
-export const useIpc = () => {
+export const useIpc = (): { isLoading: boolean } => {
+  const [isLoading, setLoading] = useState(true);
   const { setName, setDaily, setDate, setTime, setId } =
     useControlContextActions();
   const { id } = useParams<{ id: string }>();
+
+  const result = useMemo(
+    () => ({
+      isLoading,
+    }),
+    [isLoading]
+  );
 
   useEffect(() => {
     window.electron.send.getReminder({ id: id || "" });
@@ -17,12 +25,15 @@ export const useIpc = () => {
 
       setId((prev) => (prev !== item.id ? item.id : prev));
       setName((prev) => (prev !== item.name ? item.name : prev));
-      // setDaily((prev) => (prev !== item.isDaily ? item.isDaily : prev));
-      setDaily(item.isDaily);
+      setDaily((prev) => (prev !== item.isDaily ? item.isDaily : prev));
       setDate((prev) => (prev !== item.date ? item.date : prev));
       setTime((prev) => (prev !== item.time ? item.time : prev));
+
+      setLoading(false);
     });
 
     return unSub;
-  }, [setId, setName, setDaily, setDate, setTime]);
+  }, []);
+
+  return result;
 };

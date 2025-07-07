@@ -9,6 +9,4 @@ export type THookControl = {
   handleTextInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleAdd: (event: MouseEvent<HTMLButtonElement>) => void;
   submitFormAction: (_: undefined, formData: FormData) => Promise<undefined>;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  isDaily: boolean;
 };

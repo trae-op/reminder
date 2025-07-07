@@ -30,19 +30,27 @@ export function registerIpc(): void {
 
   ipcMainOn("openDelete", (_, { id }) => {
     deleteWindowId = id;
-    openReminderWindow("window/reminder/delete", id);
+    openReminderWindow({
+      hash: "window/reminder/delete",
+      id,
+      options: {
+        width: 350,
+        height: 190,
+      },
+    });
   });
 
   ipcMainOn("openUpdate", (_, { id }) => {
-    const win = openReminderWindow("window/reminder/update", id);
-
-    win.webContents.openDevTools();
+    openReminderWindow({
+      hash: "window/reminder/update",
+      id,
+    });
   });
 
   ipcMainOn("openAdd", () => {
-    const win = openReminderWindow("window/reminder/add");
-
-    win.webContents.openDevTools();
+    openReminderWindow({
+      hash: "window/reminder/add",
+    });
   });
 
   ipcMainHandle("addReminder", async (payload) => {
@@ -109,7 +117,7 @@ export function registerIpc(): void {
     const updateReminderWindow = getWindow(
       `window/reminder/update/${response.id}`
     );
-    console.log("updateReminderWindow", updateReminderWindow);
+
     if (mainWindow !== undefined && updateReminderWindow !== undefined) {
       const reminders = await list();
       ipcWebContentsSend("reminders", mainWindow.webContents, {
