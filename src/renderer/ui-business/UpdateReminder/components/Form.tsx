@@ -6,8 +6,6 @@ import { DateField } from "@mui/x-date-pickers/DateField";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import { useDayjs } from "@hooks/dayjs";
 import { useControl } from "../hooks/useControl";
 import {
@@ -15,13 +13,14 @@ import {
   useControlContextActions,
 } from "../hooks/useControlContext";
 import { SubmitButton } from "./SubmitButton";
+import { CheckboxDaily } from "./CheckboxDaily";
 import { useIpc } from "../hooks/useIpc";
 
 export const Form = memo(() => {
   useIpc();
   const dayjs = useDayjs();
   const { handleDateChange, handleTimeChange } = useControlContextActions();
-  const { time, date, daily, name } = useControlContext();
+  const { time, date, name } = useControlContext();
   const { submitFormAction } = useControl();
   const [_, formAction] = useActionState(submitFormAction, undefined);
 
@@ -63,10 +62,7 @@ export const Form = memo(() => {
           </DemoContainer>
         </LocalizationProvider>
 
-        <FormControlLabel
-          control={<Checkbox checked={daily} name="daily" />}
-          label="Daily"
-        />
+        <CheckboxDaily />
         <SubmitButton />
       </Stack>
     </form>

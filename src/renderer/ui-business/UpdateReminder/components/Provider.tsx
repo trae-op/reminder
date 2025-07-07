@@ -9,7 +9,7 @@ export const Provider = ({ children }: TPropsProvider) => {
   const [name, setName] = useState<TContext["name"]>("");
   const [date, setDate] = useState<TContext["date"]>(undefined);
   const [time, setTime] = useState<TContext["time"]>(undefined);
-  const [isDaily, setDaily] = useState<TContext["daily"]>(undefined);
+  const [daily, setDaily] = useState<TContext["daily"]>(undefined);
 
   const handleTimeChange = (value: PickerValue) => {
     if (value) {
@@ -30,10 +30,10 @@ export const Provider = ({ children }: TPropsProvider) => {
       name,
       date,
       time,
-      isDaily,
+      daily,
       id,
     }),
-    [name, date, time, isDaily, id]
+    [name, date, time, daily, id]
   );
 
   const actions = useMemo(

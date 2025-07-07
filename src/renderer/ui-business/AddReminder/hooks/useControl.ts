@@ -35,7 +35,7 @@ export const useControl = (): THookControl => {
           name,
           time,
           date,
-          isDaily: !!daily,
+          isDaily: daily == "on",
         });
       }
     },
