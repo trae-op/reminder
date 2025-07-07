@@ -10,6 +10,7 @@ import { FormRemindersLayout } from "@layouts/FormReminders";
 const LazyHomeWindow = lazy(() => import("./windows/home/Home"));
 const LazyUpdaterWindow = lazy(() => import("./windows/updater/Updater"));
 const LazyAddReminderWindow = lazy(() => import("./windows/AddReminder"));
+const LazyUpdateReminderWindow = lazy(() => import("./windows/UpdateReminder"));
 const LazyLogInWindow = lazy(() => import("./windows/logIn/LogIn"));
 const LazyConfirmDeleteReminderWindow = lazy(
   () => import("./windows/confirmDeleteReminder/Confirm")
@@ -32,6 +33,10 @@ export const App = () => {
                 <Route
                   path="/window/reminder/add"
                   element={<LazyAddReminderWindow />}
+                />
+                <Route
+                  path="/window/reminder/update/:id"
+                  element={<LazyUpdateReminderWindow />}
                 />
               </Route>
               <Route

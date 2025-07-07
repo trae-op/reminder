@@ -5,8 +5,6 @@ import { THookControl } from "./types";
 export const useControl = (): THookControl => {
   const { id } = useParams<{ id: string }>();
 
-  console.log("id", id);
-
   const submitFormAction = useCallback(async (): Promise<undefined> => {
     await window.electron.invoke.deleteReminder({
       id: id + "",

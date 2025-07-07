@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react";
-import { PickerValue } from "@mui/x-date-pickers/internals";
 import type { TPropsProvider } from "./types";
 import { Context, ContextActions } from "../context";
 import { TContext } from "../context/type";
@@ -8,37 +7,26 @@ export const Provider = ({ children }: TPropsProvider) => {
   const [name, setName] = useState<TContext["name"]>("");
   const [date, setDate] = useState<TContext["date"]>(undefined);
   const [time, setTime] = useState<TContext["time"]>(undefined);
-
-  const handleTimeChange = (value: PickerValue) => {
-    if (value) {
-      const result = value.toDate();
-      setTime(result);
-    }
-  };
-
-  const handleDateChange = (value: PickerValue) => {
-    if (value) {
-      const result = value.toDate();
-      setDate(result);
-    }
-  };
+  const [isDaily, setDaily] = useState<TContext["daily"]>(undefined);
 
   const value = useMemo(
     () => ({
       name,
       date,
       time,
+      isDaily,
     }),
-    [name, date, time]
+    [name, isDaily, date, time]
   );
 
   const actions = useMemo(
     () => ({
       setName,
-      handleDateChange,
-      handleTimeChange,
+      setDaily,
+      setDate,
+      setTime,
     }),
-    [setName, handleTimeChange, handleDateChange]
+    [setName, setDaily, setDate, setTime]
   );
 
   return (

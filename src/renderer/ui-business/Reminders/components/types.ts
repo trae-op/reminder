@@ -10,7 +10,7 @@ export type TPropsForm = {
 
 export type TPropsItem = Pick<
   TReminder,
-  "id" | "name" | "isDaily" | "datetime"
+  "id" | "name" | "isDaily" | "date" | "time"
 > & {
   handleUpdate: () => void;
   handleDelete: () => void;

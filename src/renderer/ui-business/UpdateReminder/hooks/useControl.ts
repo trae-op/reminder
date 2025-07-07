@@ -1,18 +1,9 @@
-import { ChangeEvent, useCallback, useMemo, useState } from "react";
-import {
-  useControlContextActions,
-  useControlContext,
-} from "./useControlContext";
+import { ChangeEvent, useCallback, useMemo } from "react";
+import { useControlContextActions } from "./useControlContext";
 import { THookControl } from "./types";
 
 export const useControl = (): THookControl => {
-  const { time, date } = useControlContext();
   const { setName } = useControlContextActions();
-
-  const [isDaily, setDaily] = useState(false);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDaily(event.target.checked);
-  };
 
   const handleAdd = useCallback(() => {
     window.electron.send.windowOpenAdd();
@@ -28,29 +19,45 @@ export const useControl = (): THookControl => {
   const submitFormAction = useCallback(
     async (_: undefined, formData: FormData): Promise<undefined> => {
       const name = formData.get("name");
+      const time = formData.get("time");
+      const date = formData.get("date");
       const daily = formData.get("daily");
 
-      if (typeof name === "string" && name.length && time !== undefined) {
+      let _date: Date | undefined = undefined;
+      if (typeof date === "string" && date) {
+        const parsed = new Date(date);
+        if (!isNaN(parsed.getTime())) {
+          _date = parsed;
+        }
+      }
+
+      let _time: Date | undefined = undefined;
+      if (typeof time === "string" && time) {
+        const parsed = new Date(time);
+        if (!isNaN(parsed.getTime())) {
+          _time = parsed;
+        }
+      }
+
+      if (typeof name === "string" && name.length && _time !== undefined) {
         await window.electron.invoke.addReminder({
           name,
-          time,
-          date,
+          time: _time,
+          date: _date,
           isDaily: !!daily,
         });
       }
     },
-    [time, date]
+    []
   );
 
   const value = useMemo(
     () => ({
-      isDaily,
       handleAdd,
-      handleChange,
       submitFormAction,
       handleTextInputChange,
     }),
-    [handleAdd, submitFormAction, handleTextInputChange, handleChange, isDaily]
+    [handleAdd, submitFormAction, handleTextInputChange]
   );
 
   return value;

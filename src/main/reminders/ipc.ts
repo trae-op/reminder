@@ -5,7 +5,7 @@ import {
 } from "../@shared/utils.js";
 import { cacheReminders } from "../@shared/cache-responses.js";
 import { getElectronStorage } from "../@shared/store.js";
-import { list, add, deleteById } from "./services/response.js";
+import { list, add, update, deleteById } from "./services/response.js";
 import { openReminderWindow } from "./windows.js";
 import { getWindow } from "../@shared/control-window/receive.js";
 
@@ -38,7 +38,9 @@ export function registerIpc(): void {
   });
 
   ipcMainOn("openAdd", () => {
-    openReminderWindow("window/reminder/add");
+    const win = openReminderWindow("window/reminder/add");
+
+    win.webContents.openDevTools();
   });
 
   ipcMainHandle("addReminder", async (payload) => {
@@ -51,11 +53,49 @@ export function registerIpc(): void {
     if (userId === undefined) {
       return undefined;
     }
-
     const response = await add({
       name: payload.name,
       isDaily: payload.isDaily,
-      datetime: payload.datetime,
+      time: payload.time,
+      date: payload.date,
+      userId: Number(userId),
+    });
+
+    if (response === undefined) {
+      return;
+    }
+
+    const mainWindow = getWindow<TWindows["main"]>("window:main");
+    const addReminderWindow = getWindow<TWindows["addReminder"]>(
+      "window/reminder/add"
+    );
+    if (mainWindow !== undefined && addReminderWindow !== undefined) {
+      const reminders = await list();
+      ipcWebContentsSend("reminders", mainWindow.webContents, {
+        items: reminders || [],
+      });
+      addReminderWindow.close();
+    }
+
+    return undefined;
+  });
+
+  ipcMainHandle("updateReminder", async (payload) => {
+    if (payload === undefined) {
+      return undefined;
+    }
+
+    const userId = getElectronStorage("userId");
+
+    if (userId === undefined) {
+      return undefined;
+    }
+
+    const response = await update(payload.id + "", {
+      name: payload.name,
+      isDaily: payload.isDaily,
+      time: payload.time,
+      date: payload.date,
       userId: Number(userId),
     });
 

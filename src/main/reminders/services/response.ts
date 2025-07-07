@@ -5,7 +5,6 @@ import {
   get,
   put,
 } from "../../@shared/services/rest-api/service.js";
-import type { TPostBody, TPutBody } from "./types.js";
 import { showErrorMessages } from "../../@shared/services/error-messages.js";
 import { ApiError } from "../../@shared/services/rest-api/types.js";
 

@@ -1,21 +1,27 @@
 import { useActionState, memo } from "react";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimeField } from "@mui/x-date-pickers/TimeField";
 import { DateField } from "@mui/x-date-pickers/DateField";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useControl } from "../hooks/useControl";
-import { useControlContextActions } from "../hooks/useControlContext";
+import { useControlContext } from "../hooks/useControlContext";
 import { SubmitButton } from "./SubmitButton";
+import { useDayjs } from "@hooks/dayjs";
 
 export const Form = memo(() => {
-  const { handleDateChange, handleTimeChange } = useControlContextActions();
-  const { submitFormAction, isDaily, handleChange } = useControl();
+  const dayjs = useDayjs();
+  const { time, date, daily, name } = useControlContext();
+  const { submitFormAction } = useControl();
   const [_, formAction] = useActionState(submitFormAction, undefined);
+
+  if (dayjs === null) {
+    return null;
+  }
 
   return (
     <form action={formAction} noValidate autoComplete="off">
@@ -24,29 +30,25 @@ export const Form = memo(() => {
           name="name"
           label="Name"
           variant="outlined"
+          value={name}
           fullWidth
           required
         />
+
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["DateField"]}>
-            <DateField onChange={handleDateChange} name="date" label="Date" />
+            <DateField value={dayjs(date)} name="date" label="Date" />
           </DemoContainer>
         </LocalizationProvider>
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["TimeField"]}>
-            <TimeField
-              onChange={handleTimeChange} // Handle changes here
-              name="time"
-              label="Time"
-            />
+            <TimeField value={dayjs(time)} name="time" label="Time" />
           </DemoContainer>
         </LocalizationProvider>
 
         <FormControlLabel
-          control={
-            <Checkbox checked={isDaily} onChange={handleChange} name="daily" />
-          }
+          control={<Checkbox checked={daily} name="daily" />}
           label="Daily"
         />
         <SubmitButton />

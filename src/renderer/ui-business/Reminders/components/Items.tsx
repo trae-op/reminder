@@ -30,7 +30,8 @@ export const Items = memo(() => {
         id={item.id}
         name={item.name}
         isDaily={item.isDaily}
-        datetime={item.datetime}
+        date={item.date}
+        time={item.time}
         handleUpdate={handleUpdate}
         handleDelete={handleDelete}
       />
