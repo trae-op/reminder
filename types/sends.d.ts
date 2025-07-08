@@ -23,6 +23,7 @@ type TEventPayloadSend = {
   openUpdate: TCallbackGetReminder;
   openDelete: TCallbackGetReminder;
   openAdd: undefined;
+  startScheduler: undefined;
   cancelDeleteReminder: undefined;
 };
 
@@ -41,4 +42,5 @@ type TSend = {
   windowOpenDelete: (payload: TEventPayloadSend["openDelete"]) => void;
   windowOpenDelete: (payload: TEventPayloadSend["openDelete"]) => void;
   cancelDeleteReminder: () => void;
+  startScheduler: () => void;
 };

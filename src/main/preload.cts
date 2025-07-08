@@ -55,6 +55,9 @@ electron.contextBridge.exposeInMainWorld("electron", {
     windowOpenAdd: () => {
       ipcSend("openAdd");
     },
+    startScheduler: () => {
+      ipcSend("startScheduler");
+    },
     windowOpenUpdate: (payload) => {
       ipcSend("openUpdate", payload);
     },
