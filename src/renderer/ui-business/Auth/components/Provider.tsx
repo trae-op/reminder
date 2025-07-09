@@ -6,6 +6,7 @@ import { TContext } from "../context/type";
 export const Provider = ({ children }: TPropsProvider) => {
   const [isAuthenticated, setAuthenticated] =
     useState<TContext["isAuthenticated"]>(undefined);
+  const [isSleepOff, setSleepOff] = useState(true);
 
   const logout = () => {
     setAuthenticated(false);
@@ -14,16 +15,18 @@ export const Provider = ({ children }: TPropsProvider) => {
   const value = useMemo(
     () => ({
       isAuthenticated,
+      isSleepOff,
     }),
-    [isAuthenticated]
+    [isAuthenticated, isSleepOff]
   );
 
   const actions = useMemo(
     () => ({
       setAuthenticated,
+      setSleepOff,
       logout,
     }),
-    [setAuthenticated, logout]
+    [setAuthenticated, logout, setSleepOff]
   );
 
   useEffect(() => {

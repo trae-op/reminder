@@ -2,6 +2,7 @@ import { cacheReminders } from "../@shared/cache-responses.js";
 import { notification } from "../@shared/notification.js";
 import { showErrorMessages } from "../@shared/services/error-messages.js";
 import { getElectronStorage } from "../@shared/store.js";
+import { timers } from "../config.js";
 
 let intervalId: NodeJS.Timeout | null = null;
 
@@ -48,7 +49,7 @@ export function timer(): void {
         if (
           reminderTime &&
           timeOnly >= reminderTime &&
-          timeOnly <= reminderTime + 1000
+          timeOnly <= reminderTime + timers.deviation
         ) {
           openNotification(reminder.name);
         }
@@ -91,13 +92,13 @@ export function timer(): void {
           currentTime &&
           reminderTime &&
           currentTime >= reminderTime &&
-          currentTime <= reminderTime + 500
+          currentTime <= reminderTime + timers.deviation
         ) {
           openNotification(reminder.name);
         }
       }
     });
-  }, 1000);
+  }, timers.intervalScheduler);
 }
 
 export function stopTimer(): void {

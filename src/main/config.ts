@@ -71,6 +71,7 @@ export const restApi = {
       base: "/auth",
       google: "/google",
       facebook: "/facebook",
+      sleep: "/sleep",
     },
     user: {
       base: "/user",
@@ -82,4 +83,10 @@ export const restApi = {
     },
     githubReleases: `https://api.github.com/repos/${publishOptions.owner}/${publishOptions.repo}/releases`,
   },
+};
+
+export const timers = {
+  intervalCheckSleep: 60000,
+  intervalScheduler: 500,
+  deviation: 1000,
 };

@@ -14,6 +14,7 @@ import {
 import { TopPanel } from "@layouts/TopPanel";
 import { Container as ContainerAppVersion } from "@ui-composites/AppVersion";
 import CircularProgress from "@mui/material/CircularProgress";
+import { PreloadStatusTopPanel } from "./PreloadStatusTopPanel";
 
 const LazyAddReminderButton = lazy(() => import("./AddReminderButton"));
 
@@ -42,6 +43,8 @@ const ContainerTopPanel = memo(() => {
         alignItems="center"
         sx={{ width: "100%" }}
       >
+        <PreloadStatusTopPanel />
+
         <Suspense fallback={<CircularProgress size={20} />}>
           <LazyAddReminderButton />
         </Suspense>
