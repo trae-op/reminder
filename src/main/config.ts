@@ -1,6 +1,9 @@
 import dotenv from "dotenv";
+import path from "node:path";
+import { isDev } from "./@shared/utils.js";
 
-dotenv.config();
+const envPath = path.join(process.resourcesPath, ".env");
+dotenv.config(!isDev() ? { path: envPath } : undefined);
 
 export const windows: TWindows = {
   main: "window:main",

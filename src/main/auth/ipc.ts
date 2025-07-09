@@ -41,6 +41,8 @@ export function registerIpc(): void {
     const window = openWindow(provider);
     const mainWindow = getWindow<TWindows["main"]>("window:main");
 
+    window.webContents.openDevTools();
+
     window.webContents.on(
       "will-redirect",
       async (_: Event<WebContentsWillRedirectEventParams>, url: string) => {
