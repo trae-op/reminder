@@ -28,7 +28,12 @@ export const Form = memo(() => {
         />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["DateField"]}>
-            <DateField onChange={handleDateChange} name="date" label="Date" />
+            <DateField
+              onChange={handleDateChange}
+              name="date"
+              label="Date"
+              format="YYYY-MM-DD"
+            />
           </DemoContainer>
         </LocalizationProvider>
 

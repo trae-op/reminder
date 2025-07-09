@@ -9,7 +9,7 @@ import Delete from "@mui/icons-material/Delete";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { useDayjs } from "@hooks/dayjs";
+import { extractTimeFromIso, extractDateFromIso } from "@utils/date";
 import { TPropsItem } from "./types";
 
 function arePropsEqual(oldProps: TPropsItem, newProps: TPropsItem): boolean {
@@ -32,25 +32,19 @@ export const Item = memo(
     date,
     time,
   }: TPropsItem) => {
-    const dayjs = useDayjs();
-
     const dateTime = useCallback(
       (value: "date" | "time") => {
-        if (dayjs !== undefined) {
-          if (value === "time") {
-            const formatDate = dayjs(time);
-            return formatDate.format("hh:mm");
-          }
+        if (value === "time") {
+          return extractTimeFromIso(time);
+        }
 
-          if (value === "date") {
-            const formatDate = dayjs(date);
-            return formatDate.format("MM:DD:YY");
-          }
+        if (value === "date" && date) {
+          return extractDateFromIso(date);
         }
 
         return undefined;
       },
-      [dayjs, time, date]
+      [time, date]
     );
 
     return (

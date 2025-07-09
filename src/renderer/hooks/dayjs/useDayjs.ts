@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { TDayjs } from "./types";
 
-let cachedDayjs: typeof import("dayjs") | undefined = undefined;
+let cachedDayjs: TDayjs = undefined;
 
 export function useDayjs() {
   const [isLoaded, setLoaded] = useState(false);

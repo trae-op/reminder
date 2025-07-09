@@ -33,6 +33,7 @@ export const DateTextField = () => {
           value={memoizedTimeValue}
           name="date"
           label="Date"
+          format="YYYY-MM-DD"
         />
       </DemoContainer>
     </LocalizationProvider>
