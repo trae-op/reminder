@@ -12,8 +12,9 @@ export async function sleep<R extends TResponseSleep>(): Promise<
 
   if (response.error !== undefined) {
     showErrorMessages({
-      title: "Error request by getUserById",
+      title: "Error request by sleep",
       body: response.error.message,
+      isDialog: false,
     });
   }
 
