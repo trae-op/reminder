@@ -4,9 +4,11 @@ import {
   Items,
   useControlContext as useControlContextResources,
 } from "@ui-business/Reminders";
+import { Item as CardReminder } from "@ui-composites/CardReminder";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { TPropsItem } from "@ui-composites/CardReminder/components/types";
 
 const Container = memo(({ children }: { children: React.ReactElement }) => {
   const { list } = useControlContextResources();
@@ -60,7 +62,7 @@ const Reminders = memo(() => {
   return (
     <Provider>
       <Container>
-        <Items />
+        <Items<TPropsItem> component={CardReminder} />
       </Container>
     </Provider>
   );

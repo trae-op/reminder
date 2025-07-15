@@ -7,11 +7,3 @@ export type TPropsProvider = {
 export type TPropsForm = {
   id: string;
 };
-
-export type TPropsItem = Pick<
-  TReminder,
-  "id" | "name" | "isDaily" | "date" | "time"
-> & {
-  handleUpdate: () => void;
-  handleDelete: () => void;
-};

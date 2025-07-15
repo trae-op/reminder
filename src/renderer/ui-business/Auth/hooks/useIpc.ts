@@ -10,7 +10,6 @@ export const useIpc = () => {
 
   useEffect(() => {
     window.electron.send.sleep();
-    console.log("sleep!!!");
   }, []);
 
   useEffect(() => {

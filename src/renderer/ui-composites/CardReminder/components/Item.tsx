@@ -1,16 +1,15 @@
-import { memo, useCallback } from "react";
+import { memo } from "react";
 import IconButton from "@mui/material/IconButton";
-import EventRepeatIcon from "@mui/icons-material/EventRepeat";
 import Card from "@mui/material/Card";
-import Stack from "@mui/material/Stack";
-import Tooltip from "@mui/material/Tooltip";
 import EditIcon from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { extractTimeFromIso, extractDateFromIso } from "@utils/date";
+import { useControl } from "../hooks";
 import { TPropsItem } from "./types";
+import { Daily } from "./Daily";
+import { Datetime } from "./Datetime";
 
 function arePropsEqual(oldProps: TPropsItem, newProps: TPropsItem): boolean {
   return (
@@ -32,20 +31,7 @@ export const Item = memo(
     date,
     time,
   }: TPropsItem) => {
-    const dateTime = useCallback(
-      (value: "date" | "time") => {
-        if (value === "time") {
-          return extractTimeFromIso(time);
-        }
-
-        if (value === "date" && date) {
-          return extractDateFromIso(date);
-        }
-
-        return undefined;
-      },
-      [time, date]
-    );
+    const { dateTime } = useControl({ time, date });
 
     return (
       <Card sx={{ width: "100%" }}>
@@ -60,23 +46,8 @@ export const Item = memo(
             justifyContent: "flex-end",
           }}
         >
-          {isDaily && (
-            <Tooltip title="Daily" placement="top" arrow>
-              <Stack direction="row" alignItems="center" spacing={0.5}>
-                <EventRepeatIcon fontSize="small" />{" "}
-                <time>{dateTime("time")}</time>
-              </Stack>
-            </Tooltip>
-          )}
-
-          {Boolean(!isDaily && date !== undefined) && (
-            <Tooltip title="Datetime" placement="top" arrow>
-              <Stack direction="row" alignItems="center" spacing={0.5}>
-                <EventRepeatIcon fontSize="small" />{" "}
-                <time>{`${dateTime("date")} / ${dateTime("time")}`}</time>
-              </Stack>
-            </Tooltip>
-          )}
+          <Daily isDaily={isDaily} dateTime={dateTime} />
+          <Datetime isDaily={isDaily} date={date} dateTime={dateTime} />
 
           <IconButton data-id={id} onClick={handleUpdate}>
             <EditIcon fontSize="small" />
