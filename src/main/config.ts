@@ -89,7 +89,7 @@ export const restApi = {
 };
 
 export const timers = {
-  intervalCheckSleep: 60000,
+  intervalCheckSleep: 60000 * 5,
   intervalScheduler: 500,
   deviation: 1000,
 };

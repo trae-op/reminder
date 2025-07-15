@@ -4,6 +4,7 @@ import {
   Items,
   useControlContext as useControlContextResources,
 } from "@ui-business/Reminders";
+import { useControlContext } from "@ui-business/Auth";
 import { Item as CardReminder } from "@ui-composites/CardReminder";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -59,10 +60,12 @@ const Container = memo(({ children }: { children: React.ReactElement }) => {
 });
 
 const Reminders = memo(() => {
+  const { isSleepOff } = useControlContext();
+
   return (
     <Provider>
       <Container>
-        <Items<TPropsItem> component={CardReminder} />
+        <Items<TPropsItem> component={CardReminder} isSleepOff={isSleepOff} />
       </Container>
     </Provider>
   );

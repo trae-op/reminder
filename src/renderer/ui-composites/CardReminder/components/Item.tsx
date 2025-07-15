@@ -30,6 +30,7 @@ export const Item = memo(
     isDaily,
     date,
     time,
+    isSleepOff = false,
   }: TPropsItem) => {
     const { dateTime } = useControl({ time, date });
 
@@ -49,10 +50,18 @@ export const Item = memo(
           <Daily isDaily={isDaily} dateTime={dateTime} />
           <Datetime isDaily={isDaily} date={date} dateTime={dateTime} />
 
-          <IconButton data-id={id} onClick={handleUpdate}>
+          <IconButton
+            disabled={!isSleepOff}
+            data-id={id}
+            onClick={handleUpdate}
+          >
             <EditIcon fontSize="small" />
           </IconButton>
-          <IconButton data-id={id} onClick={handleDelete}>
+          <IconButton
+            disabled={!isSleepOff}
+            data-id={id}
+            onClick={handleDelete}
+          >
             <Delete fontSize="small" />
           </IconButton>
         </CardActions>
