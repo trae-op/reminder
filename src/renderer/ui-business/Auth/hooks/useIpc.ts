@@ -19,7 +19,7 @@ export const useIpc = () => {
   }, []);
 
   useEffect(() => {
-    window.electron.receive.subscribeSleep(({ ok }) => {
+    window.electron.receive.subscribeSleepOff(({ ok }) => {
       setSleepOff(ok);
     });
   }, []);

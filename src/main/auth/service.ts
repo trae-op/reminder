@@ -3,7 +3,7 @@ import { get } from "../@shared/services/rest-api/service.js";
 import { showErrorMessages } from "../@shared/services/error-messages.js";
 import { TResponseSleep } from "./types.js";
 
-export async function sleep<R extends TResponseSleep>(): Promise<
+export async function sleepOff<R extends TResponseSleep>(): Promise<
   R | undefined
 > {
   const response = await get<R>(

@@ -31,7 +31,7 @@ type TGetReminder = {
   item: TReminder | undefined;
 };
 
-type TSleep = {
+type TSleepOff = {
   ok: boolean;
 };
 
@@ -44,7 +44,7 @@ type TEventPayloadReceive = {
   };
   reminders: TReminders;
   getReminder: TGetReminder;
-  sleep: TSleep;
+  sleepOff: TSleepOff;
 };
 
 type TReceive = {
@@ -66,7 +66,7 @@ type TReceive = {
   subscribeGetReminder: (
     callback: (payload: TEventPayloadReceive["getReminder"]) => void
   ) => TUnsubscribeFunction;
-  subscribeSleep: (
-    callback: (payload: TEventPayloadReceive["sleep"]) => void
+  subscribeSleepOff: (
+    callback: (payload: TEventPayloadReceive["sleepOff"]) => void
   ) => TUnsubscribeFunction;
 };

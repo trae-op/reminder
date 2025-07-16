@@ -11,12 +11,15 @@ import { cacheUser } from "../@shared/cache-responses.js";
 import { messages, timers } from "../config.js";
 import { logout } from "../@shared/services/logout.js";
 import { showErrorMessages } from "../@shared/services/error-messages.js";
-import { sleep } from "./service.js";
+import { sleepOff } from "./service.js";
 
 export function registerIpc(): void {
   ipcMainOn("sleep", () => {
     const mainWindow = getWindow<TWindows["main"]>("window:main");
     if (mainWindow !== undefined) {
+      ipcWebContentsSend("sleepOff", mainWindow.webContents, {
+        ok: false,
+      });
       sleepInterval(mainWindow);
     }
   });
@@ -89,12 +92,12 @@ export function registerIpc(): void {
 
 async function sleepInterval(window: BrowserWindow) {
   const interval = setInterval(async () => {
-    ipcWebContentsSend("sleep", window.webContents, {
+    ipcWebContentsSend("sleepOff", window.webContents, {
       ok: false,
     });
 
-    const response = await sleep();
-    ipcWebContentsSend("sleep", window.webContents, {
+    const response = await sleepOff();
+    ipcWebContentsSend("sleepOff", window.webContents, {
       ok: (response !== undefined && response.ok) || true,
     });
 

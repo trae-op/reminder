@@ -17,7 +17,8 @@ function arePropsEqual(oldProps: TPropsItem, newProps: TPropsItem): boolean {
     oldProps.id === newProps.id &&
     oldProps.isDaily === newProps.isDaily &&
     oldProps.date === newProps.date &&
-    oldProps.time === newProps.time
+    oldProps.time === newProps.time &&
+    oldProps.isSleepOff === newProps.isSleepOff
   );
 }
 

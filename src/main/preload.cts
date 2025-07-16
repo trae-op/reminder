@@ -26,8 +26,8 @@ electron.contextBridge.exposeInMainWorld("electron", {
       ipcOn("getReminder", (payload) => {
         callback(payload);
       }),
-    subscribeSleep: (callback) =>
-      ipcOn("sleep", (payload) => {
+    subscribeSleepOff: (callback) =>
+      ipcOn("sleepOff", (payload) => {
         callback(payload);
       }),
   },
