@@ -3,7 +3,6 @@ export type TPropsItem = Partial<
 > & {
   handleUpdate?: () => void;
   handleDelete?: () => void;
-  isSleepOff?: boolean;
 };
 
 export type TPropsDaily = {

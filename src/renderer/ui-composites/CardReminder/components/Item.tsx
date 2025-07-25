@@ -17,8 +17,7 @@ function arePropsEqual(oldProps: TPropsItem, newProps: TPropsItem): boolean {
     oldProps.id === newProps.id &&
     oldProps.isDaily === newProps.isDaily &&
     oldProps.date === newProps.date &&
-    oldProps.time === newProps.time &&
-    oldProps.isSleepOff === newProps.isSleepOff
+    oldProps.time === newProps.time
   );
 }
 
@@ -31,7 +30,6 @@ export const Item = memo(
     isDaily,
     date,
     time,
-    isSleepOff = false,
   }: TPropsItem) => {
     const { dateTime } = useControl({ time, date });
 
@@ -51,18 +49,10 @@ export const Item = memo(
           <Daily isDaily={isDaily} dateTime={dateTime} />
           <Datetime isDaily={isDaily} date={date} dateTime={dateTime} />
 
-          <IconButton
-            disabled={!isSleepOff}
-            data-id={id}
-            onClick={handleUpdate}
-          >
+          <IconButton data-id={id} onClick={handleUpdate}>
             <EditIcon fontSize="small" />
           </IconButton>
-          <IconButton
-            disabled={!isSleepOff}
-            data-id={id}
-            onClick={handleDelete}
-          >
+          <IconButton data-id={id} onClick={handleDelete}>
             <Delete fontSize="small" />
           </IconButton>
         </CardActions>

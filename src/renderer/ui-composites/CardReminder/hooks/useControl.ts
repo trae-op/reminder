@@ -1,14 +1,10 @@
 import { useCallback } from "react";
 import { extractTimeFromIso, extractDateFromIso } from "@utils/date";
-
-type ParamsHookUseControl = {
-  time?: Date;
-  date?: Date;
-};
+import type { ParamsHookUseControl, DateTimeExtractor } from "./types";
 
 export function useControl({ time, date }: ParamsHookUseControl) {
-  const dateTime = useCallback(
-    (value: "date" | "time") => {
+  const dateTime: DateTimeExtractor = useCallback(
+    (value) => {
       if (value === "time" && time) {
         return extractTimeFromIso(time);
       }
