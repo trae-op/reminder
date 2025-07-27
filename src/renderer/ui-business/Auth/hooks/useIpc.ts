@@ -9,10 +9,6 @@ export const useIpc = () => {
   }, []);
 
   useEffect(() => {
-    window.electron.send.sleep();
-  }, []);
-
-  useEffect(() => {
     window.electron.receive.subscribeWindowAuth(({ isAuthenticated }) => {
       setAuthenticated(isAuthenticated);
     });

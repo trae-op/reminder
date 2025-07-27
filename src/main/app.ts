@@ -18,6 +18,7 @@ import { registerIpc as registerIpcReminders } from "./reminders/ipc.js";
 import { registerIpc as registerIpcAuth } from "./auth/ipc.js";
 import { registerIpc as registerIpcUser } from "./user/ipc.js";
 import { registerIpc as registerIpcScheduler } from "./scheduler/ipc.js";
+import { registerIpc as registerIpcSleep } from "./sleep/ipc.js";
 import { crash } from "./crash/service.js";
 import { menu } from "./config.js";
 
@@ -86,6 +87,7 @@ app.on("ready", async () => {
   registerIpcUpdater();
   registerIpcReminders();
   registerIpcScheduler();
+  registerIpcSleep();
 
   handleCloseEvents(mainWindow);
 });

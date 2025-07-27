@@ -1,29 +1,14 @@
-import {
-  BrowserWindow,
-  type Event,
-  type WebContentsWillRedirectEventParams,
-} from "electron";
+import { type Event, type WebContentsWillRedirectEventParams } from "electron";
 import { ipcMainOn, ipcWebContentsSend } from "../@shared/utils.js";
 import { getWindow } from "../@shared/control-window/receive.js";
 import { openWindow } from "./window.js";
 import { getElectronStorage, setElectronStorage } from "../@shared/store.js";
 import { cacheUser } from "../@shared/cache-responses.js";
-import { messages, timers } from "../config.js";
+import { messages } from "../config.js";
 import { logout } from "../@shared/services/logout.js";
 import { showErrorMessages } from "../@shared/services/error-messages.js";
-import { sleepOff } from "./service.js";
 
 export function registerIpc(): void {
-  ipcMainOn("sleep", () => {
-    const mainWindow = getWindow<TWindows["main"]>("window:main");
-    if (mainWindow !== undefined) {
-      ipcWebContentsSend("sleepOff", mainWindow.webContents, {
-        ok: false,
-      });
-      sleepInterval(mainWindow);
-    }
-  });
-
   ipcMainOn("logout", () => {
     logout();
   });
@@ -88,22 +73,4 @@ export function registerIpc(): void {
       }
     );
   });
-}
-
-async function sleepInterval(window: BrowserWindow) {
-  const interval = setInterval(async () => {
-    ipcWebContentsSend("sleepOff", window.webContents, {
-      ok: false,
-    });
-
-    const response = await sleepOff();
-    ipcWebContentsSend("sleepOff", window.webContents, {
-      ok: (response !== undefined && response.ok) || true,
-    });
-
-    const authToken = getElectronStorage("authToken");
-    if (authToken === undefined) {
-      clearInterval(interval);
-    }
-  }, timers.intervalCheckSleep);
 }
