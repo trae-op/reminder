@@ -91,5 +91,5 @@ export const restApi = {
 export const timers = {
   intervalCheckSleep: isDev() ? 5000 : 60000 * 5,
   intervalScheduler: 500,
-  deviation: 1000,
+  deviation: 500,
 };
