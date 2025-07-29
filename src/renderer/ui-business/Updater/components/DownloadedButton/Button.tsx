@@ -8,7 +8,7 @@ export const DownloadedButton = forwardRef(
     const { status, version } = useControlContext();
     const { handleUpdate } = useUpdateDownloaded();
 
-    if (status !== "update-downloaded" && version === undefined) {
+    if (status !== "update-downloaded") {
       return null;
     }
 
